@@ -54,7 +54,49 @@ func post() {
 	defer resp.Body.Close()
 }
 
+func put() {
+	fmt.Println("Performing Put request/....!")
+
+	PostReq := Todo{UserID: 2, ID: 5220, Title: "Hello master", Completed: true}
+
+	req, _ := json.Marshal(PostReq)
+
+	reqst, err := http.NewRequest(http.MethodPut, "https://jsonplaceholder.typicode.com/todos", bytes.NewBuffer(req))
+	if err != nil {
+		log.Fatal("Error")
+	}
+	client := &http.Client{}
+	resp, err := client.Do(reqst)
+
+	body, _ := io.ReadAll(resp.Body)
+	fmt.Printf("API response for Put call %+v\n", string(body))
+	defer resp.Body.Close()
+}
+
+func delete() {
+	fmt.Println("Performing Delete request/....!")
+
+	PostReq := Todo{UserID: 2, ID: 3445, Title: "Hello master", Completed: true}
+
+	req, _ := json.Marshal(PostReq)
+
+	reqst, err := http.NewRequest(http.MethodDelete, "https://jsonplaceholder.typicode.com/todos", bytes.NewBuffer(req))
+	if err != nil {
+		log.Fatal("Error")
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(reqst)
+	body, _ := io.ReadAll(resp.Body)
+	fmt.Printf("API response for Delete call %+v\n", string(body))
+	defer resp.Body.Close()
+}
+
 func main() {
 	get()
 	post()
+	put()
+	post()
+	delete()
+	get()
 }
